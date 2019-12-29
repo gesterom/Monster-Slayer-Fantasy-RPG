@@ -1,0 +1,11 @@
+Config config =
+{
+	{
+		"localhost",
+		3306,
+		"gameServer",
+		""//password,
+		"game"//databaseName
+	}
+}
+;

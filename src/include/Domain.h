@@ -1,6 +1,6 @@
-#pragam once
+#pragma once
 #include <string>
-// magic
+#include <vector>
 
 namespace Domain
 {
@@ -8,12 +8,12 @@ namespace Domain
 		int max = 100 ;
 		int min = 0;
 		int current = 100;
-	}
+	};
 	struct statistic{
 		int base;
 		int bias;
 		double percent;
-	}
+	};
 	struct location{
 		int id;
 		std::string name;
@@ -23,12 +23,5 @@ namespace Domain
 	struct character{
 		bar hp;
 		bar mana;
-	}
+	};
 }
-
-class DBadapter
-{
-	public:
-	DBadapter(std::string url,std::string usr,std::string password);
-	location getLocationById(int id);
-};
