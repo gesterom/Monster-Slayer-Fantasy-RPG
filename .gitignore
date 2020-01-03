@@ -2,4 +2,4 @@
 a.out
 bin/
 *.o
-
+target/
