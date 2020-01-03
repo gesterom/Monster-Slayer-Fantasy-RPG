@@ -1,7 +1,7 @@
 
 ## TO Config ##
 
-FLAGS= -std=c++2a -Wall -O3
+FLAGS= -std=c++2a -Wall -O3 -g
 
 LFLAGS=
 LIB=-ldl -lmysqlpp -lzmq -lpthread -lPocoNet -lPocoUtil -lPocoFoundation

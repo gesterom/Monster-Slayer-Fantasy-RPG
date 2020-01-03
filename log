@@ -1,0 +1,153 @@
+src/server.main.cpp:79:3: error: expected unqualified-id before 'for'
+   79 |   for(int i = 0 ; i < 8 ;i ++){
+      |   ^~~
+src/server.main.cpp:79:19: error: 'i' does not name a type
+   79 |   for(int i = 0 ; i < 8 ;i ++){
+      |                   ^
+src/server.main.cpp:79:26: error: 'i' does not name a type
+   79 |   for(int i = 0 ; i < 8 ;i ++){
+      |                          ^
+src/server.main.cpp:82:8: error: 'cout' in namespace 'std' does not name a type
+   82 |   std::cout<<"\nRECV HEADER : ["<<std::string((const char*)header,7)<<"]  n:"<<n<<"\n";
+      |        ^~~~
+In file included from src/server.main.cpp:1:
+/usr/include/c++/9.2.0/iostream:61:18: note: 'std::cout' declared here
+   61 |   extern ostream cout;  /// Linked to standard output
+      |                  ^~~~
+src/server.main.cpp:84:8: error: 'cout' in namespace 'std' does not name a type
+   84 |   std::cout<<"RECV SIZE : ["<<size<<"]\n";
+      |        ^~~~
+In file included from src/server.main.cpp:1:
+/usr/include/c++/9.2.0/iostream:61:18: note: 'std::cout' declared here
+   61 |   extern ostream cout;  /// Linked to standard output
+      |                  ^~~~
+src/server.main.cpp:85:3: error: expected unqualified-id before 'if'
+   85 |   if(size > 1024 ) { return Command{c_error_t::too_big};}
+      |   ^~
+src/server.main.cpp:86:3: error: 'n' does not name a type
+   86 |   n = socket().receiveBytes(buf,size);
+      |   ^
+src/server.main.cpp:87:3: error: expected unqualified-id before 'if'
+   87 |   if( n == 0 ) { return Command{c_error_t::too_small};}
+      |   ^~
+src/server.main.cpp:88:3: error: expected unqualified-id before 'if'
+   88 |   if( n >= 1024) { return Command{c_error_t::too_big};}
+      |   ^~
+src/server.main.cpp:89:8: error: 'cout' in namespace 'std' does not name a type
+   89 |   std::cout<<"RECV N : ["<<n<<"]\n";
+      |        ^~~~
+In file included from src/server.main.cpp:1:
+/usr/include/c++/9.2.0/iostream:61:18: note: 'std::cout' declared here
+   61 |   extern ostream cout;  /// Linked to standard output
+      |                  ^~~~
+src/server.main.cpp:90:3: error: 'buf' does not name a type
+   90 |   buf[n+1] = '0';
+      |   ^~~
+src/server.main.cpp:91:8: error: 'cout' in namespace 'std' does not name a type
+   91 |   std::cout<<"RECV : ["<<std::string((const char*)buf,n)<<"]\n";
+      |        ^~~~
+In file included from src/server.main.cpp:1:
+/usr/include/c++/9.2.0/iostream:61:18: note: 'std::cout' declared here
+   61 |   extern ostream cout;  /// Linked to standard output
+      |                  ^~~~
+src/server.main.cpp:92:3: error: 'header' does not name a type; did you mean 'h_addr'?
+   92 |   header[0] = '\0';
+      |   ^~~~~~
+      |   h_addr
+src/server.main.cpp:93:3: error: expected unqualified-id before 'return'
+   93 |   return Command{
+      |   ^~~~~~
+src/server.main.cpp:100:14: error: expected initializer before '&' token
+  100 |  CommandQueue& q;
+      |              ^
+src/server.main.cpp: In function 'void send(std::string)':
+src/server.main.cpp:104:10: error: too few arguments to function 'int socket(int, int, int)'
+  104 |   socket().sendBytes(str.c_str(),str.size());
+      |          ^
+In file included from /usr/include/Poco/Net/SocketDefs.h:134,
+                 from /usr/include/Poco/Net/SocketImpl.h:22,
+                 from /usr/include/Poco/Net/Socket.h:22,
+                 from /usr/include/Poco/Net/ServerSocket.h:22,
+                 from /usr/include/Poco/Net/TCPServer.h:22,
+                 from src/server.main.cpp:5:
+/usr/include/sys/socket.h:102:12: note: declared here
+  102 | extern int socket (int __domain, int __type, int __protocol) __THROW;
+      |            ^~~~~~
+src/server.main.cpp: In function 'void shutdownSocket(std::string)':
+src/server.main.cpp:107:3: error: invalid use of 'this' in non-member function
+  107 |   this->send(msg);
+      |   ^~~~
+src/server.main.cpp:109:10: error: too few arguments to function 'int socket(int, int, int)'
+  109 |   socket().shutdown();
+      |          ^
+In file included from /usr/include/Poco/Net/SocketDefs.h:134,
+                 from /usr/include/Poco/Net/SocketImpl.h:22,
+                 from /usr/include/Poco/Net/Socket.h:22,
+                 from /usr/include/Poco/Net/ServerSocket.h:22,
+                 from /usr/include/Poco/Net/TCPServer.h:22,
+                 from src/server.main.cpp:5:
+/usr/include/sys/socket.h:102:12: note: declared here
+  102 | extern int socket (int __domain, int __type, int __protocol) __THROW;
+      |            ^~~~~~
+src/server.main.cpp: At global scope:
+src/server.main.cpp:111:17: error: 'auth' declared as reference but not initialized
+  111 |  Authorization& auth;
+      |                 ^~~~
+src/server.main.cpp:112:2: error: expected unqualified-id before 'public'
+  112 |  public:
+      |  ^~~~~~
+src/server.main.cpp:117:14: error: virt-specifiers in 'run' not allowed outside a class definition
+  117 |   void run() override {
+      |              ^~~~~~~~
+src/server.main.cpp: In function 'void run()':
+src/server.main.cpp:122:20: error: 'reciveCommand' was not declared in this scope
+  122 |      Command com = reciveCommand();
+      |                    ^~~~~~~~~~~~~
+src/server.main.cpp:125:7: error: invalid use of 'this' in non-member function
+  125 |       this->shutdownSocket("Invalid Command");
+      |       ^~~~
+src/server.main.cpp:134:7: error: 'q' was not declared in this scope
+  134 |       q.push( com );
+      |       ^
+src/server.main.cpp:135:7: error: invalid use of 'this' in non-member function
+  135 |       this->send("OK\n");
+      |       ^~~~
+src/server.main.cpp:139:7: error: 'handleGet' was not declared in this scope
+  139 |       handleGet(com);
+      |       ^~~~~~~~~
+src/server.main.cpp:144:9: error: invalid use of 'this' in non-member function
+  144 |         this->shutdownSocket("not enough argument \n");
+      |         ^~~~
+src/server.main.cpp:152:9: error: invalid use of 'this' in non-member function
+  152 |         this->send( std::string("TOKEN : ") + token + " \n");
+      |         ^~~~
+src/server.main.cpp:154:9: error: invalid use of 'this' in non-member function
+  154 |         this->send("invalid username or password");
+      |         ^~~~
+src/server.main.cpp:159:7: error: invalid use of 'this' in non-member function
+  159 |       this->shutdownSocket("invalid header");
+      |       ^~~~
+src/server.main.cpp: At global scope:
+src/server.main.cpp:171:1: error: expected declaration before '}' token
+  171 | };
+      | ^
+src/server.main.cpp: In member function 'virtual Poco::Net::TCPServerConnection* IOHandlerFactory::createConnection(const Poco::Net::StreamSocket&)':
+src/server.main.cpp:178:37: error: invalid new-expression of abstract class type 'IOHandler'
+  178 |   return new IOHandler(socket,q,auth);
+      |                                     ^
+src/server.main.cpp:45:7: note:   because the following virtual functions are pure within 'IOHandler':
+   45 | class IOHandler : public Poco::Net::TCPServerConnection {
+      |       ^~~~~~~~~
+In file included from /usr/include/Poco/ActiveRunnable.h:23,
+                 from /usr/include/Poco/ActiveMethod.h:23,
+                 from /usr/include/Poco/AbstractEvent.h:25,
+                 from /usr/include/Poco/BasicEvent.h:21,
+                 from /usr/include/Poco/FIFOBuffer.h:24,
+                 from /usr/include/Poco/Net/StreamSocket.h:23,
+                 from /usr/include/Poco/Net/ServerSocket.h:23,
+                 from /usr/include/Poco/Net/TCPServer.h:22,
+                 from src/server.main.cpp:5:
+/usr/include/Poco/Runnable.h:36:15: note: 	'virtual void Poco::Runnable::run()'
+   36 |  virtual void run() = 0;
+      |               ^~~
+make: *** [makefile:43: target/obj/server.main.o] Error 1

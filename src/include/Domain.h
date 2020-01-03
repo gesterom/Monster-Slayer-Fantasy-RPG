@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <stdint.h>
 
 namespace Domain
 {
@@ -25,3 +26,5 @@ namespace Domain
 		bar mana;
 	};
 }
+
+using Player_id = uint32_t;

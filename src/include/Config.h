@@ -14,18 +14,4 @@ struct Config
 	} server;
 };
 
-Config getConfig()
-{
-	Config config =
-	{
-		{
-			"localhost",
-			3306,
-			"gameServer",
-			""//password,
-			"game"//databaseName
-		},
-		{8085}
-	};
-	return config;
-}
+
