@@ -19,7 +19,7 @@ Config getConfig()
 			"localhost",//database url
 			3306,//database port
 			"gameServer",//database user
-			""//password,
+			"",//password,
 			"game"//databaseName
 		},
 		{8085}
@@ -183,16 +183,38 @@ try
 	}	
 	Config config = getConfig();
 	config.database.password = args[1];
+	
+	std::cout<<"Database : ";
 	DBadapter* dba = new ProductionDBadapter(config);
+	std::cout<<"[DONE]\n";
 	
+	std::cout<<"CommandQ ";	
 	CommandQueue commandQ;
-	Tokens tokens(60);
-	Authorization auth(dba,tokens);
-	Poco::Net::TCPServer tcpserver(new IOHandlerFactory(commandQ,auth),config.server.port);
-	Server server(commandQ,dba);
+	std::cout<<"[DONE]\n";
 	
+	std::cout<<"Tokens ";	
+	Tokens tokens(60);
+	std::cout<<"[DONE]\n";
+	
+	std::cout<<"Authorization ";	
+	Authorization auth(dba,tokens);
+	std::cout<<"[DONE]\n";
+	
+	std::cout<<"TCPServer ";	
+	Poco::Net::TCPServer tcpserver(new IOHandlerFactory(commandQ,auth),config.server.port);
+	std::cout<<"[DONE]\n";
+	
+	std::cout<<"Server ";	
+	Server server(commandQ,dba);
+	std::cout<<"[DONE]\n";
+	
+	std::cout<<"TCPServer Start ";	
 	tcpserver.start();
+	std::cout<<"[DONE]\n";
+
+	std::cout<<"Server Start ";	
 	server.run();	
+	std::cout<<"[DONE]\n";
 
 	/*	std::string input;
 	while(input!="exit"){
