@@ -1,7 +1,7 @@
 
 ## TO Config ##
 
-FLAGS= -std=c++2a -Wall -O3 -g
+FLAGS= -std=c++2a -Wall 
 
 LFLAGS=
 LIB=-ldl -lmysqlpp -lzmq -lpthread -lPocoNet -lPocoUtil -lPocoFoundation
@@ -35,12 +35,12 @@ prebuild:
 
 $(BINDIR)/%.out: $(OBJ) prebuild
 	@echo "build target : " $(@:$(BINDIR)/%.out=$(OBJDIR)/%.main.o)
-	@$(LINKER) $(LFLAGS) $(filter-out %.main.o,$(OBJ)) $(@:$(BINDIR)/%.out=$(OBJDIR)/%.main.o) $(LIB) -o $@ 
+	@$(LINKER) $(FLAGS) $(LFLAGS) $(filter-out %.main.o,$(OBJ)) $(@:$(BINDIR)/%.out=$(OBJDIR)/%.main.o) $(LIB) -o $@ 
 
 $(OBJ) : $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(dir $@)
 	@echo "build : " $@
-	@$(CC) $(CFLAGS) $(INCLUDELIB) -I$(INCDIR) -c $< -o $@
+	@$(CC) $(FLAGS) $(CFLAGS) $(INCLUDELIB) -I$(INCDIR) -c $< -o $@
 
 clean: all
 	rm -rf $(OBJDIR)

@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include "Tokens.h"
-
+#include "DBadapter.h"
 
 using Player_id = uint32_t;
 
@@ -24,21 +24,12 @@ class Authorization {
 		}
 	}
 	Player_id getPlayerId( std::string token ) {
-		std::cout << "TOKEN TO VALIDATION : " << token << " s : " << token.size() << "\n";
 		std::string username = tokens.getUsernameBy( token );
-		std::cout << "User name : " << username << std::endl;
 
 		if( username == "" ) {
 			return 0;    // invalid user;
 		}
 
-		std::cout << "User name : " << username << std::endl;
 		return db->getPlayer_idByUsername( username );
 	}
-	/*  bool isAuthorized(Player_id player_id){
-		if(player_id == 0)
-			return false;
-		return true;
-		//std::string username = db->getUsernameByPlayer_id(playerid);
-	    }*/
 };

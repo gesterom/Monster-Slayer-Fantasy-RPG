@@ -5,6 +5,7 @@
 
 #include "Config.h"
 #include "Domain.h"
+#include "Domain/Localization.h"
 #include "DBadapter.h"
 
 class ProductionDBadapter : public DBadapter {
@@ -12,8 +13,9 @@ class ProductionDBadapter : public DBadapter {
 	mysqlpp::Connection conn;
   public:
 	ProductionDBadapter ( Config config );
-	virtual bool getConnectionLocation( int one, int secend ) override;
+	virtual bool areLocationConnected( int one, int secend ) override;
 	virtual bool isSign( std::string username, std::string password ) override;
 	virtual Player_id getPlayer_idByUsername( std::string username ) override;
-	virtual Domain::location getLocationById( int id );
+	virtual std::vector<Domain::Localization::Connection> getLocationConnections(int id) override;
+	virtual pair<std::string,std::string> getLocationNameDescription(int id) override;
 };

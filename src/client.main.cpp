@@ -5,47 +5,9 @@
 
 #include <Poco/Net/StreamSocket.h>
 
+#include "Common.h"
+
 using Socket_t = Poco::Net::StreamSocket;
-
-std::vector<std::string> sub( std::string data ) {
-	std::vector<std::string> res;
-	std::string word;
-
-	for( size_t i = 0 ; i < data.size(); i++ ) {
-		if( data[i] == ' ' ) {
-			res.push_back( word );
-			word = "";
-		}
-		else {
-			word += data[i];
-		}
-	}
-
-	if( word != "" ) {
-		res.push_back( word );
-	}
-
-	return res;
-}
-
-uint32_t getIntFromSocket( Poco::Net::StreamSocket& socket ) {
-	uint32_t res = 0;
-	uint8_t buf;
-
-	while ( true ) {
-		int n = socket.receiveBytes( &buf, sizeof( buf ) );
-
-		if( buf >= '0' and buf <= '9' ) {
-			res = res * 10;
-			res = res + buf - '0';
-		}
-		else {
-			break;
-		}
-	}
-
-	return res;
-}
 
 std::string login( Socket_t& sock, std::string username, std::string password ) {
 	char buff[1024];
@@ -53,9 +15,9 @@ std::string login( Socket_t& sock, std::string username, std::string password ) 
 	std::string data = username + " " + password;
 	data = std::to_string( data.size() ) + " " + data;
 	req = req + data;
-	int z = sock.sendBytes( req.c_str(), req.size() );
+	sock.sendBytes( req.c_str(), req.size() );
 	int n = getIntFromSocket( sock );
-	int a = sock.receiveBytes( buff, n );
+	sock.receiveBytes( buff, n );
 	std::string token = sub( std::string( buff, n ) )[2];
 	char zzz[5] = {};
 
@@ -74,7 +36,7 @@ std::string sendG( Socket_t& sock, std::string token, std::string data ) {
 	req = token + " G ";
 	data = std::to_string( data.size() ) + " " + data;
 	req = req + data;
-	int z = sock.sendBytes( req.c_str(), req.size() );
+	sock.sendBytes( req.c_str(), req.size() );
 	int n = getIntFromSocket( sock );
 	n = sock.receiveBytes( buff, n );
 	std::cout << "RECV : " << std::string( buff, n ) << std::endl;

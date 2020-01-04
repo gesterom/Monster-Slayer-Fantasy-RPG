@@ -26,22 +26,19 @@ std::string Tokens::getNewToken( std::string username ) {
 
 	while( true ) {
 		toks = genRandomStringToken( 4 );
-		auto it = map.find( toks );
-
-		if( it == map.end() ) {
+		if(toks == "0000") continue;
+		
+		if( not isValidToken ( toks ) ){
 			map[toks] = token;
 			return toks;
-			break;
-		}
-
-		if ( it->second.expiry < std::chrono::system_clock::now() ) {
-			map.erase( it );
 		}
 	}
 
 	return "XXXX";
 }
 bool Tokens::isValidToken( std::string token ) {
+	if(token == "0000") return false;
+	
 	auto it = map.find( token );
 
 	if( it == map.end() ) {

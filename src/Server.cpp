@@ -7,17 +7,17 @@ void Server::run() {
 		return;
 	}
 
-	while( true ) { //TODO
+	while( true ) { 
 		try {
 			Command com = commandQ.pop();
 
 			if( com.data[0] == "move" ) {
 				int destinationLocation = std::stoi( com.data[1] );
 				int currentPlayerLocation = current.getPlayerLocation( com.player_id );
-				bool LocationsIsConnected = db->getConnectionLocation( currentPlayerLocation, destinationLocation );
+				bool LocationsIsConnected = db->areLocationConnected( currentPlayerLocation, destinationLocation );
 
 				if( LocationsIsConnected ) {
-					int err = backBuffer.setLocationForPlayer( com.player_id, destinationLocation );
+					backBuffer.setLocationForPlayer( com.player_id, destinationLocation );
 				}
 
 				//TEST

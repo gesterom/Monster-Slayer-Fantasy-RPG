@@ -15,10 +15,7 @@ ProductionDBadapter::ProductionDBadapter( Config config ) {
 	}
 }
 
-Domain::location ProductionDBadapter::getLocationById( int id ) {
-	return Domain::location{};
-}
-bool ProductionDBadapter::getConnectionLocation( int one, int secend ) {
+bool ProductionDBadapter::areLocationConnected( int one, int secend ) {
 	auto a = conn.query( "select * from loc_connections where source = " ) ;
 	a << one << " and  destination = " << secend << " ; ";
 
@@ -62,4 +59,41 @@ Player_id ProductionDBadapter::getPlayer_idByUsername( std::string username ) {
 	}
 
 	return 0;
+}
+std::vector<Domain::Localization::Connection> ProductionDBadapter::getLocationConnections(int id){
+	std::vector<Domain::Localization::Connection> res;
+	auto a = conn.query( "select description,destination from loc_connections where source = " ) ;
+	a << id << " ;";
+	
+	if( not a ) {
+		std::cout << "???\n";
+		throw std::runtime_error("database explode");
+	}
+
+	Domain::Localization::Connection temp;
+	for( auto i : a.store() ) {
+		i[0].to_string(temp.description);
+		temp.destination = i[1];
+		res.push_back(temp);
+	}
+	return res;
+}
+
+pair<std::string,std::string> ProductionDBadapter::getLocationNameDescription(int id){ //TODO
+	pair<std::string,std::string> res;
+	
+	auto a = conn.query( "select location_name,file_name from location where id = " ) ;
+	a << id << " ;";
+	
+	if( not a ) {
+		std::cout << "???\n";
+		throw std::runtime_error("database explode");
+	}
+
+	for( auto i : a.store() ) {
+		i[0].to_string(res.first);
+		i[1].to_string(res.secend);
+	}
+	
+	return res;
 }

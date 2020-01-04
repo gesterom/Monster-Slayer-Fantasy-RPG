@@ -5,7 +5,6 @@
 #include "DBadapter.h"
 class Server {
   private:
-	// TODO Tokens& tokens;
 	GameState current;
 	GameState backBuffer;
 	CommandQueue& commandQ;

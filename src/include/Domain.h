@@ -27,3 +27,4 @@ namespace Domain {
 }
 
 using Player_id = uint32_t;
+
