@@ -74,23 +74,15 @@ class IOHandler : public Poco::Net::TCPServerConnection {
 		//header[8]='\0';
 			
 		if(n==0) {
-			std::cout<<"byby\n";
 			return Command{c_error_t::too_big};
 		}
-		for(int i = 0 ; i < 8 ;i ++){
-			printf("%x ",header[i]);
-		}
-		std::cout<<"\nRECV HEADER : ["<<std::string((const char*)header,7)<<"]  n:"<<n<<"\n";
+
 		uint32_t size = getIntFromSocket(socket());
-		std::cout<<"RECV SIZE : ["<<size<<"]\n";
 		if(size > 1024 ) { return Command{c_error_t::too_big};}
 		n = socket().receiveBytes(buf,size);
 		if( n == 0 ) { return Command{c_error_t::too_small};}
 		if( n >= 1024) { return Command{c_error_t::too_big};}
-		std::cout<<"RECV N : ["<<n<<"]\n";
 		buf[n+1] = '0';
-		std::cout<<"RECV : ["<<std::string((const char*)buf,n)<<"]\n";
-		header[0] = '\0';
 		return Command{
 										header[5],
 										auth.getPlayerId(std::string( (const char*)header,4)),

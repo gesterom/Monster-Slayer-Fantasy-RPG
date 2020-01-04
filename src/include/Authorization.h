@@ -23,8 +23,9 @@ class Authorization
 		else return "";
 	}
 	Player_id getPlayerId(std::string token){
-			return 1;
+			std::cout<<"TOKEN TO VALIDATION : "<<token<<" s : "<<token.size()<<"\n";
 			std::string username = tokens.getUsernameBy(token);
+			std::cout<<"User name : "<<username<<std::endl;
 			if(username == "")
 				return 0; // invalid user;
 			std::cout<<"User name : "<<username<<std::endl;

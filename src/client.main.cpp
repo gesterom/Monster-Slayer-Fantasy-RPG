@@ -44,9 +44,7 @@ std::string login(Socket_t& sock,std::string username, std::string password)
 	std::string data =username+" "+password;
 	data=std::to_string(data.size()) + " "+ data;
 	req=req+data;
-	std::cout<<"sended ["+req+"] n : "<<req.size() <<"\n";
 	int z = sock.sendBytes(req.c_str(),req.size());
-	std::cout<<"n : "<<z<<std::endl;
 	int n = getIntFromSocket(sock);
 	int a = sock.receiveBytes(buff,n);
 	std::string token = sub(std::string(buff,n))[2];
@@ -54,7 +52,7 @@ std::string login(Socket_t& sock,std::string username, std::string password)
 	for(int i = 0; i < 4; i++){
 		zzz[i] = token[i];
 	}
-	std::cout<<"=====================\n";
+	std::cout<<"["<<token<<"]\n=====================\n";
 	return std::string(zzz,4);
 }
 
@@ -63,16 +61,9 @@ std::string sendG(Socket_t& sock, std::string token, std::string data){
 	char zeff[8];
 	std::string req(zeff,7);
 	req=token+" G ";
-	std::cout<<"TOKEN : ["<<token<<"]:size:"<<token.size()<<"\n";
-	std::cout<<"REQ : ["<<req<<"]\n";
-	std::cout<<"req.size() : "<<req.size()<<std::endl;
 	data=std::to_string(data.size())+" "+data;
-	std::cout<<"data.size() : "<<data.size()<<std::endl;
 	req = req + data;
-	std::cout<<"sended ["+req+"] n : "<<req.size() <<"\n";
 	int z = sock.sendBytes(req.c_str(),req.size());
-	std::cout<<"n : "<<z<<std::endl;
-	std::cout<<"sended ["+req+"]\n";
 	int n = getIntFromSocket(sock);
 	n = sock.receiveBytes(buff,n);
 	std::cout<<"RECV : "<<std::string(buff,n)<<std::endl;
