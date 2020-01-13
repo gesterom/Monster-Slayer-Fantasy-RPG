@@ -23,6 +23,7 @@ class IOHandler : public Poco::Net::TCPServerConnection {
 	CommandQueue& q;
 	void send( std::string str ) ;
 	void shutdownSocket( std::string msg ) ;
+	void handleMSG();
 	//handlers
 	bool handleLogin	( Command& com ) ;
 	bool handleGet		( Command& com ) ;

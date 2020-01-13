@@ -18,4 +18,6 @@ class ProductionDBadapter : public DBadapter {
 	virtual Player_id getPlayer_idByUsername( std::string username ) override;
 	virtual std::vector<Domain::Localization::Connection> getLocationConnections(int id) override;
 	virtual pair<std::string,std::string> getLocationNameDescription(int id) override;
+	virtual int getPlayerLocation(int player_id) override; 
+	virtual ~ProductionDBadapter() {}
 };

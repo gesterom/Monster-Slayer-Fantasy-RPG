@@ -16,6 +16,7 @@ class DBadapter {
 	virtual Player_id getPlayer_idByUsername( std::string username ) = 0;
 	virtual std::vector<Domain::Localization::Connection> getLocationConnections(int id) = 0;
 	virtual pair<std::string,std::string> getLocationNameDescription(int id) = 0;
+	virtual int getPlayerLocation(int player_id) = 0;
 	virtual ~DBadapter() {}
 };
 

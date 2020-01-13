@@ -10,38 +10,7 @@ void IOHandler::run() {
 		bool isConnected = true;
 
 		while( isConnected ) {
-			Command com = reciveCommand();
-			std::cout << "[new command]\n";
-
-			if( com.error != c_error_t::none ) {
-				this->shutdownSocket( "Invalid Command" );
-				return;
-			}
-
-			bool isAuthorized = ( com.player_id != 0 );
-
-			if( com.type == 'C' and isAuthorized ) {
-				//COMMAND
-				q.push( com );
-				this->send( "OK\n" );
-			}
-			else if( com.type == 'G' and isAuthorized ) {
-				//GET
-				handleGet( com );
-			}
-			else if( com.type == 'L' ) {
-				if( handleLogin(com) == false ){
-					return;
-				}
-			}
-			else {
-				std::cout << "Type : " << com.type << std::endl;
-				this->shutdownSocket( "invalid header" );
-			}
-
-			//if "get" go to dbadapter;
-			//if "command" go to Server object
-			std::cout << "-----\n";
+			this->handleMSG();
 		}
 	}
 	catch( Poco::Net::NetException& e ) {
@@ -57,9 +26,12 @@ bool IOHandler::handleLogin(Command& com){
 
 	std::string token = auth.login( com.data[0], com.data[1] );
 	std::cout << "LOGIN | TOKEN : ["<<token<<"] , username : "<<com.data[0]<<std::endl; 
-
+	
 	if( token != "" ) {
 		this->send( std::string( "TOKEN : " ) + token + " \n" );
+		auto player_id = auth.getPlayerId(token);
+		com.player_id = player_id;
+		q.push(com);
 		return true;
 	}
 	else {
@@ -70,12 +42,14 @@ bool IOHandler::handleLogin(Command& com){
 
 bool IOHandler::handleGet( Command& com ) {
 	//TODO GET handler
-	if(com.data.size() > 1 and com.data[0] == "localization"){
-		auto loc = dao.getLocalization(std::stoi(com.data[1]));
+	if(com.data.size() > 0 and com.data[0] == "localization"){
+		std::cerr<<"1 : Player_id : "<<com.player_id<<std::endl;	
+		auto loc = dao.getLocalizationOfPlayer(com.player_id);
+		std::cerr<<"2\n";	
 		this->send(std::string("LOCALIZATION ") + loc.serialize());
 	}
-	std::cout << "data: " << com.data[0] << std::endl;
-	this->send( com.data[0] );
+	//std::cout << "data: " << com.data[0] << std::endl;
+	//this->send( com.data[0] );
 	return true;
 } 
 
@@ -113,10 +87,48 @@ Command IOHandler::reciveCommand() {
 
 void IOHandler::send( std::string str ) {
 	str = std::to_string( str.size() + 1 ) + " " + str;
+	std::cout<<"SEND : ["<<str<<"]\n";
 	socket().sendBytes( str.c_str(), str.size() );
 }
 void IOHandler::shutdownSocket( std::string msg ) {
 	this->send( msg );
 	std::cout << "[-----]\n";
 	socket().shutdown();
+}
+
+void IOHandler::handleMSG(){
+
+	Command com = reciveCommand();
+	std::cout << "[new command]\n";
+
+	if( com.error != c_error_t::none ) {
+		this->shutdownSocket( "Invalid Command" );
+		return;
+	}
+
+	bool isAuthorized = ( com.player_id != 0 );
+
+	if( com.type == 'C' and isAuthorized ) {
+		//COMMAND
+		q.push( com );
+		this->send( "OK\n" );
+	}
+	else if( com.type == 'G' and isAuthorized ) {
+		//GET
+		handleGet( com );
+	}
+	else if( com.type == 'L' ) {
+		if( handleLogin(com) == false ){
+			return;
+		}
+	}
+	else {
+		std::cout << "Type : " << com.type << std::endl;
+		this->shutdownSocket( "invalid header" );
+	}
+
+	//if "get" go to dbadapter;
+	//if "command" go to Server object
+	std::cout << "-----\n";
+
 }

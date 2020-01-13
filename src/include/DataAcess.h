@@ -10,5 +10,5 @@ class DataAcess{
 		Server& server;
 	public:
 		DataAcess(DBadapter* dba,Server& serv) : db(dba), server(serv) {}
-		Domain::Localization getLocalization(int id);	
+		Domain::Localization getLocalizationOfPlayer(int player_id);	
 };

@@ -13,7 +13,7 @@ enum class c_error_t : int {
 
 struct Command {
 	c_error_t error;
-	std::string username;
+	//std::string username;
 	Player_id player_id;
 	std::vector<std::string> data;
 	uint8_t type;
@@ -26,5 +26,8 @@ struct Command {
 	}
 	Command( c_error_t error ) {
 		this->error = error;
+	}
+	std::string serialize(){
+		return "TODO";
 	}
 };

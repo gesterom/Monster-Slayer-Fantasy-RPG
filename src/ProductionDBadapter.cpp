@@ -31,8 +31,10 @@ bool ProductionDBadapter::areLocationConnected( int one, int secend ) {
 }
 
 bool ProductionDBadapter::isSign( std::string username, std::string password ) {
+	std::string q = "select player_id from users where username like ? and password like ?";
+	
 	auto a = conn.query( "select player_id from users where username " ) ;
-	a << " like '" << username << "' and  password like '" << password << "' ; ";
+	a << " like " << mysqlpp::quote << username << " and  password like " <<mysqlpp::quote<< password << " ; ";
 
 	if( not a ) {
 		std::cout << "???\n";
@@ -96,4 +98,19 @@ pair<std::string,std::string> ProductionDBadapter::getLocationNameDescription(in
 	}
 	
 	return res;
+}
+
+int ProductionDBadapter::getPlayerLocation(int player_id){
+	auto a = conn.query( "select location from users where player_id = " ) ;
+	a << player_id << " ;";
+	
+	if( not a ) {
+		std::cout << "???\n";
+		throw std::runtime_error("database explode");
+	}
+	
+	for( auto i : a.store() ) {
+		return i[0];
+	}
+	return 1;
 }

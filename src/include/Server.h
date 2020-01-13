@@ -9,7 +9,10 @@ class Server {
 	GameState backBuffer;
 	CommandQueue& commandQ;
 	DBadapter* db;
-  public:
+	bool loginPlayer(int player_id);
+  void execCommand(Command& c);
+	public:
 	Server( CommandQueue& cQ, DBadapter* dba ) : commandQ( cQ ), db( dba ) {}
+	int whereIsPlayer(int Player_id);
 	void run();
 };

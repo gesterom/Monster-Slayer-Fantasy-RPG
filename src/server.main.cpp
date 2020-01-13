@@ -25,7 +25,7 @@ Config getConfig() {
 	};
 	return config;
 }
-
+/*
 class IOHandlerFactory : public Poco::Net::TCPServerConnectionFactory {
 	CommandQueue& q;
 	Authorization& auth;
@@ -37,7 +37,7 @@ class IOHandlerFactory : public Poco::Net::TCPServerConnectionFactory {
 	IOHandlerFactory( CommandQueue& commandQ, Authorization& a , DataAcess& d ) 
 			: q( commandQ ), auth( a ),dao(d) {}
 	virtual ~IOHandlerFactory() {}
-};
+};*/
 
 bool testDatabaseAdapter(DBadapter* db);
 bool testDAO(DataAcess& dao);
@@ -84,11 +84,11 @@ try {
 	}	
 	
 	std::cout << "TCPServer ";
-	Poco::Net::TCPServer tcpserver( new IOHandlerFactory( commandQ, auth , dao ), config.server.port );
+	//Poco::Net::TCPServer tcpserver( new IOHandlerFactory( commandQ, auth , dao ), config.server.port );
 	std::cout << "[DONE]\n";
 	
 	std::cout << "TCPServer Start ";
-	tcpserver.start();
+	//tcpserver.start();
 	std::cout << "[DONE]\n";
 
 	std::cout << "Server Start \n\n==============================\n\n";
@@ -103,8 +103,8 @@ catch( std::exception& e ) {
 
 
 bool testDAO(DataAcess& dao){
-	//return false;
-	std::cout<<"DAO : ["<<dao.getLocalization(1).serialize()<<"]\n";
+	return false;
+	std::cout<<"DAO : ["<<dao.getLocalizationOfPlayer(1).serialize()<<"]\n";
 	return true;	
 }
 
